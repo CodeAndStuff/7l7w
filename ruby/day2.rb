@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-#Open write file with and without code blocks
 
 #Class Tree
+#Adapted to work with dictionaries
 
 class Tree
   attr_accessor :children,:node_name
@@ -23,10 +23,9 @@ class Tree
     children.each {|c| c.visit_all &block}
   end
 end
+
+#Open write file with and without code blocks
 #Without code block
-
-
-
 def saveNoCodeBlock
   file=File::open("data/nocodeblock.txt","w")
   file << "Data in no code block mode\n"
@@ -34,7 +33,6 @@ def saveNoCodeBlock
 end
 
 #With code block
-
 def saveWithCodeBlock
   File::open("data/codeblock.txt","w") do |file|
     file << "Data in code block mode\n"
@@ -43,7 +41,7 @@ end
 
 def hashVsArray
   hash1={'pt'=>'Portugal','en'=>'England'}
-  array=hash1
+  array=hash1.to_a
 
   array.each do |el|
     puts el[0].to_s+"-"+el[1].to_s
@@ -94,17 +92,21 @@ def fileGrep(pattern, file)
   puts "lines #{lines}"
 end
 
+def treeExample
+    #Define the hash tree
+    treeHash={'grandpa' => { 'dad' => {'child 1' => {}, 'child 2' => {} },
+    'uncle' => {'child 3' => {}, 'child 4' => {} } } }
+    #Map the dictionary into a tree object
+    tree=Tree.new(treeHash)
+    #Apply a code block into all the nodes
+    tree.visit_all{|t| p t.node_name}
+end
+
 saveNoCodeBlock
 saveWithCodeBlock
 hashVsArray
 arrayAsDeque
 array16NumbersEach
 array16NumbersEachSlice
-
-treeHash={'grandpa' => { 'dad' => {'child 1' => {}, 'child 2' => {} },
-'uncle' => {'child 3' => {}, 'child 4' => {} } } }
-
-tree=Tree.new(treeHash)
-
-tree.visit_all{|t| p t.node_name}
+treeExample
 fileGrep("master","data/pattern.txt")
