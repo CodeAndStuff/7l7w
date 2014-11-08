@@ -79,6 +79,21 @@ def array16NumbersEachSlice
   end
 end
 
+def fileGrep(pattern, file)
+  lnum=0
+  matches=[]
+  lines=[]
+  File.open(file).each do |l|
+    if [l].grep(Regexp.new(pattern))!=[]
+      lines.push(lnum)
+    end
+    lnum=lnum+1
+  end
+
+  puts "#{lines.size} lines of #{lnum} have the pattern '#{pattern}'"
+  puts "lines #{lines}"
+end
+
 saveNoCodeBlock
 saveWithCodeBlock
 hashVsArray
@@ -92,3 +107,4 @@ treeHash={'grandpa' => { 'dad' => {'child 1' => {}, 'child 2' => {} },
 tree=Tree.new(treeHash)
 
 tree.visit_all{|t| p t.node_name}
+fileGrep("master","data/pattern.txt")
