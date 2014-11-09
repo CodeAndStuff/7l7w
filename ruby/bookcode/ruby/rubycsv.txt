@@ -1,0 +1,5 @@
+CSV, HEADER, LINE
+a, csv, example
+file,that,you
+can,load, automatically
+from, your, ruby, class
