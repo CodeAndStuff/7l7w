@@ -359,4 +359,15 @@ On the book *read* method we need to change row iteration into
 
 ***
 
+####Ruby Week Conclusions
+
+Ruby is a very versatile language. With awesome features for metaprogramming and very adequate to build custom DSL. It is a fun language and clean. 
+
+Ruby is pure object oriented and virtually everything on the language can be overriden. Ruby is oriented towards productivity and this also means that the language is not so performant as other languages can be.
+
+Some considerations must be done, however. Ruby object oriented model is based on a wrapping mechanism around state and the state can change. This is a very problematic situation for concurrent programming. Finally ruby is a duck typing language this able you to build more clean and readable code, but with a price. The missing of static typing make more difficult to build syntactic trees as those needed to IDE integration. 
+
+***
+
+
 
