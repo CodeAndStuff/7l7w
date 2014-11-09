@@ -81,4 +81,6 @@ m = RubyCsv.new
 puts m.headers.inspect
 puts m.csv_contents.inspect
 
-m.each {|row| puts row.CSV}
+m.each do |row|
+  puts "#{row.Name} has #{row.Age} years old and is #{row.Sex}"
+end

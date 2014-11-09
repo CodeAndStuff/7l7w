@@ -1,5 +1,5 @@
-CSV, HEADER, LINE
-a, csv, example
-file,that,you
-can,load, automatically
-from, your, ruby, class
+Name, Age, Sex
+John,23,Male
+Claire,19,Female
+Arthur,30,Male
+Jack,15,Male
