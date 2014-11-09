@@ -125,8 +125,6 @@ And then call **guessWhat()**
 
 #####Day 2
 
-***
-
 +	Find out how to access files with and without code blocks. What is the benefit of the code block?
 
 
@@ -260,4 +258,105 @@ All that is needed is some way of recognize a pattern, this is done with the **R
 	end
 
 ***
+
+#####Day 3
+
++	Modify the CSV application to support an each method to return a
+CsvRow object. Use method_missing on that CsvRow to return the value for the column for a given heading.
+
+On day 3 we talk about metaprogramming. We were provided with a book example that build code from a csv file:
+
+	module ActsAsCsv
+		def self.included(base)
+			base.extend ClassMethods
+		end
+
+		module ClassMethods
+			def acts_as_csv
+				include InstanceMethods
+			end
+		end
+		
+		module InstanceMethods
+			def read
+				@csv_contents = []
+				filename = self.class.to_s.downcase + '.txt'
+				file = File.new(filename)
+				@headers = file.gets.chomp.split(', ' )
+				file.each do |row|
+					@csv_contents << row.chomp.split(', ' )
+				end
+			end
+		
+			attr_accessor :headers, :csv_contents
+
+			def initialize
+				read
+			end
+		end
+	end
+
+	class RubyCsv # no inheritance! You can mix it in
+		include ActsAsCsv
+		acts_as_csv
+	end
+	
+	m = RubyCsv.new
+	puts m.headers.inspect
+	puts m.csv_contents.inspect
+
+From were we were asked to provide a way to iterate over rows in this way
+
+	m.each do |row|
+		puts "#{row.Name} has #{row.Age} years old and is #{row.Sex}"
+	end
+
+Note that we are assuming here the csv file with this contents
+
+	Name, Age, Sex
+	John,23,Male
+	Claire,19,Female
+	Arthur,30,Male
+	Jack,15,Male
+
+The needed changes involved the creation of  new class
+
+	class CsvRow
+
+  		attr_accessor :row
+
+ 		def initialize(headers,row)
+    			@headers=headers
+    			@row=row
+  		end
+
+  		def method_missing name, *args
+    			col=name.to_s
+    			i=0
+    			num=-1
+    			pos=0
+    			eq=false
+    			while i < @headers.length
+      				if @headers[i].to_s == col
+        				num=i
+      				end
+      				i=i+1
+    			end
+
+    			if num!=-1
+      				@row[num]
+    			else
+      				nil
+    			end
+  		end
+	end
+
+On the book *read* method we need to change row iteration into
+
+	file.each do |row|
+		@csv_contents.push(CsvRow.new(@headers,row.chomp.split(',')))
+	end
+
+***
+
 
