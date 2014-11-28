@@ -14,11 +14,11 @@ To install ruby on a debian machine just run
 To run the interpreter and develop in an interactive way you could run
 
 	user@machine> irb
-
 And start to type some code
 
 	irb(main):001:0> a=12
 	=> 12
+
 
 ####Ruby File
 
@@ -63,8 +63,8 @@ And then set the file to executable mode
 +	Print your name ten times
 
 ***
-Considering the functional method 
-	
+Considering the functional method
+
 	def times_n(f,e)
 		i=0
 		until i==e
@@ -151,7 +151,7 @@ The following code examples the conversion between the two structures
 
 	def hashVsArray
 		hash1={"pt"=>"Portugal","en"=>"England"}
-		arr=hash1.to_a		
+		arr=hash1.to_a
 		arr.each do |el|
 			puts el[0].to_s+"-"+el[1].to_s
 		end
@@ -164,7 +164,7 @@ The following code examples the conversion between the two structures
 
 +	You can use Ruby arrays as stacks. What other common data structures do arrays support?
 
-Besides a [**stack**](http://en.wikipedia.org/wiki/Stack) *Last in First Out* mechanism we've got the [**deque**](http://en.wikipedia.org/wiki/Double-ended_queue) 
+Besides a [**stack**](http://en.wikipedia.org/wiki/Stack) *Last in First Out* mechanism we've got the [**deque**](http://en.wikipedia.org/wiki/Double-ended_queue)
 
 	def arrayAsDeque
   		arr=(1..10).to_a
@@ -192,7 +192,7 @@ Without the *each_slice* method we must control the iteration by blocks manually
   		end
 	end
 
-While this works the mechanism with each_slice is much less verbose 
+While this works the mechanism with each_slice is much less verbose
 
 	def array16NumbersEachSlice
   		(1..16).each_slice(4) do |el|
@@ -209,7 +209,7 @@ The only change needed to be able to specify the **Tree** as a dictionary is on 
 	class Tree
 		#Define attributes for the nodes
   		attr_accessor :children,:node_name
-		
+
 		def initialize(hash={})
 			#Forall the dictionary elements
     			hash.each do |key,value|
@@ -276,7 +276,7 @@ On day 3 we talk about metaprogramming. We were provided with a book example tha
 				include InstanceMethods
 			end
 		end
-		
+
 		module InstanceMethods
 			def read
 				@csv_contents = []
@@ -287,7 +287,7 @@ On day 3 we talk about metaprogramming. We were provided with a book example tha
 					@csv_contents << row.chomp.split(', ' )
 				end
 			end
-		
+
 			attr_accessor :headers, :csv_contents
 
 			def initialize
@@ -300,7 +300,7 @@ On day 3 we talk about metaprogramming. We were provided with a book example tha
 		include ActsAsCsv
 		acts_as_csv
 	end
-	
+
 	m = RubyCsv.new
 	puts m.headers.inspect
 	puts m.csv_contents.inspect
@@ -361,13 +361,10 @@ On the book *read* method we need to change row iteration into
 
 ####Ruby Week Conclusions
 
-Ruby is a very versatile language. With awesome features for metaprogramming and very adequate to build custom DSL. It is a fun language and clean. 
+Ruby is a very versatile language. With awesome features for metaprogramming and very adequate to build custom DSL. It is a fun language and clean.
 
 Ruby is pure object oriented and virtually everything on the language can be overriden. Ruby is oriented towards productivity and this also means that the language is not so performant as other languages can be.
 
-Some considerations must be done, however. Ruby object oriented model is based on a wrapping mechanism around state and the state can change. This is a very problematic situation for concurrent programming. Finally ruby is a duck typing language this able you to build more clean and readable code, but with a price. The missing of static typing make more difficult to build syntactic trees as those needed to IDE integration. 
+Some considerations must be done, however. Ruby object oriented model is based on a wrapping mechanism around state and the state can change. This is a very problematic situation for concurrent programming. Finally ruby is a duck typing language this able you to build more clean and readable code, but with a price. The missing of static typing make more difficult to build syntactic trees as those needed to IDE integration.
 
 ***
-
-
-
