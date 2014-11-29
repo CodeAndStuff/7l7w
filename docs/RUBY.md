@@ -1,10 +1,4 @@
-#7L7W
-## Seven Languages Seven Weeks
-### Description
-This is a repository with the exercises purposed by the book
-
-##Code
-###Ruby
+#Ruby
 ####Instalation
 
 To install ruby on a debian machine just run
