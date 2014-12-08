@@ -66,15 +66,20 @@ m1 myAverage(list(1,10,3)) println
 
 List2D := List clone
 
+List2D data := List clone
+
 List2D dim := method(x, y,
     mlist := list
 
+
     callback := call evalArgAt(2)
+
+    if(callback isNil, callback := block setScope(call sender))
 
     for(i, 1, y,
         slist := list
         for(j, 1, x,
-            slist append(callback(i, j))
+            slist append(callback call(i, j))
         )
         mlist append(slist)
     )
@@ -89,7 +94,7 @@ List2D getXY := method(l,x,y,
   l at(x) at(y)
 )
 
-a := List2D dim(2,2,method(a,b,a+b))
+a := List2D dim(2,2,method(a,b,method(a,b,a+b)))
 
 a println
 
@@ -114,31 +119,18 @@ Matrix loadFromFile := method(filename,
 )
 
 Matrix transpose := method(
-  return List2D dim(m2 data size,m2 data at(0) size,method(x,y, return m2 data at(y-1) at(x-1)))
+  l1 := List2D clone
+  l1 data = data
+  return l1 dim(data size,data at(0) size,method(x,y, method(x,y,return data at(y-1) at(x-1))))
 )
 
-
-//File slotNames println
-
-
-//f := File open("ola.txt")
-
-//f write("1,2,3\n 4,5,6\n 7,8,9")
-//f flush
-//f close
-
-//f := File open("ola.txt")
-
-//linha := f readLine
-
-//llist := linha split(",")
-
-//llist join(",")  println
 
 
 m1 := Matrix clone
 
 m1 data = list(list(1,2,3),list(4,5,6))
+
+m1 transpose
 
 m1 saveToFile("m1.txt")
 
@@ -153,8 +145,64 @@ m2 data size println
 
 //Sequence slotNames println
 
+"Transposing " println
+m2 data println
+
 m2 transpose() println
 
 m2 data = m2 transpose()
 
 m2 transpose() println
+
+"end transposing" println
+
+
+GuessOrWhat := Object clone
+
+GuessOrWhat play := method(
+
+rnumber := (Random value( 99 ) + 1) floor();
+
+rnumber println
+
+
+stdio := File standardInput();
+
+prev := nil;
+
+10 repeat(
+
+    "Guess the number in the interval (1..100): " println();
+
+    if(prev == rnumber,break;)
+
+    guess := stdio readLine() asNumber();
+
+    if(
+        (guess != rnumber),
+        if(
+          prev,
+          if(
+            ((rnumber - guess) abs()) >= ((rnumber - prev) abs()),
+            "Colder..." println(),
+            "Warmer..." println()
+        );
+      );
+    );
+    prev = guess;
+);
+
+  if(
+      (guess == rnumber),
+      (
+          "Great! You've done it!" println();
+      ),
+      (
+          "Keep trying!" println();
+      )
+  )
+);
+
+g := GuessOrWhat clone
+
+g play
